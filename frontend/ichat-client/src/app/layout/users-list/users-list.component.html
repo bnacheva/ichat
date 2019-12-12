@@ -1,0 +1,8 @@
+<mat-list>
+  <mat-list-item *ngFor="let user of getOtherUsers()"
+                [ngClass]="getUserItemClass(user)"
+                (click)="startChatWithUser(user)">
+    <mat-icon mat-list-icon>person</mat-icon>
+    <h4 mat-line>{{user.username}}</h4>
+  </mat-list-item>
+</mat-list>

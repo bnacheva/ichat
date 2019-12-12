@@ -1,0 +1,35 @@
+<mat-grid-list cols="1" rowHeight="100px" class="login-container">
+  <mat-grid-tile>
+    <img src="assets/img/logo.png" height="100%">
+  </mat-grid-tile>
+  <mat-grid-tile style="text-align: left">
+    <div class="login-header">
+      Enter your user name to connect to the chat room
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Username" class="login-input" type="text" [(ngModel)]="username"
+        (keyup)="$event.keyCode == 13 ? connect(username) : null">
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <button mat-raised-button class="full-width" (click)="connect(username)">Connect</button>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <div class="login-header">
+      Or Login with
+    </div>
+    <button mat-icon-button (click)="signInWithGoogle()">
+      <img src="assets/img/social-google.png" height="100%">
+    </button>
+    <button mat-icon-button (click)="signInWithFB()">
+      <img src="assets/img/social-fb.png" height="100%">
+    </button>
+  </mat-grid-tile>
+  <mat-grid-tile *ngIf="message !== undefined && message !== null">
+    <span class="error-message">
+      {{message}}
+    </span>
+  </mat-grid-tile>
+</mat-grid-list>

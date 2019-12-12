@@ -1,0 +1,21 @@
+.user-item {
+	box-shadow: inset 0 0 5px rgba(80,80,80, 0.2);
+	cursor: pointer;
+	background: rgba(80,80,80, 0.2);
+}
+
+.current-chat-user {
+	background: rgba(170,170,170, 0.2);
+}
+
+.new-user {
+	background: rgba(89, 204, 97, 0.5);
+}
+
+.new-message {
+	background: rgba(232,157,27, 0.6);
+}
+
+.disconnected-user {
+	opacity: 0.4;
+}
