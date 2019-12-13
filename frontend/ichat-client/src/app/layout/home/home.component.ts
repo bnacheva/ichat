@@ -16,10 +16,6 @@ export class HomeComponent implements OnInit {
 
     constructor(private router: Router, private userService: UserService
         , private stompService: RxStompService, private authService: AuthService) {
-        // stompService.configure({
-        //     host: settings.baseUrl + '/ichat',
-        //     queue: { 'init': false }
-        // });
     }
 
     ngOnInit() {

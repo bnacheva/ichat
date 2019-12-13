@@ -6,6 +6,7 @@ import { ChannelService } from '../../shared/service/channel.service';
 import { Message } from '../../shared/model/message';
 import { MatSnackBar } from '@angular/material';
 import { MessageService } from '../../shared/service/message.service';
+import { RxStompState } from '@stomp/rx-stomp';
 
 @Component({
     selector: 'wt-userlist',
@@ -27,6 +28,7 @@ export class UsersListComponent implements OnInit {
     newConnectedUsers: Array<string> = [];
     channel: string;
     receiver: string;
+    topicSubscription;
 
     constructor(private userService: UserService, private stompService: RxStompService,
         private channelService: ChannelService, private snackBar: MatSnackBar,
@@ -85,13 +87,8 @@ export class UsersListComponent implements OnInit {
     }
 
     initUserEvents() {
-        this.stompService.activate();
-        // .then(
-        //     () => {
-        //         this.stompService.done('init');
         this.stompService.watch('/channel/login').subscribe(res => {
             const data: User = JSON.parse(res.body);
-            console.log('inside initUserEvents, channel login, user: ' + data);
             if (data.username !== this.username) {
                 this.newConnectedUsers.push(data.username);
                 setTimeout((
@@ -107,7 +104,6 @@ export class UsersListComponent implements OnInit {
 
         this.stompService.watch('/channel/logout').subscribe(res => {
             const data: User = JSON.parse(res.body);
-            console.log('inside initUserEvents, channel logout, user: ' + data);
             this.users = this.users.filter(item => item.username !== data.username);
             this.users.push(data);
             const channelId = ChannelService.createChannel(this.username, data.username);
@@ -118,7 +114,6 @@ export class UsersListComponent implements OnInit {
         });
 
         this.subscribeToOtherUsers(this.users, this.username);
-        // });
     }
 
     removeNewUserBackground(username) {
@@ -134,7 +129,6 @@ export class UsersListComponent implements OnInit {
         const channelId = ChannelService.createChannel(this.username, otherUser.username);
         this.stompService.watch(`/channel/chat/${channelId}`).subscribe(res => {
             const data: Message = JSON.parse(res.body);
-            console.log('users-list this.stompService.watch(`/channel/chat/${channelId}`).subscribe.. result: ' + data);
             this.messageService.pushMessage(data);
 
             if (data.channel !== this.channel) {

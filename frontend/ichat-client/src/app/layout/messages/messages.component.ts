@@ -36,11 +36,12 @@ export class MessagesComponent implements OnInit {
   sendMessage() {
     if (this.newMessage) {
       this.stompService.publish({
-        destination: '/app/messages', body: this.newMessage
-        // JSON.stringify({
-        //   'channel': this.channel
-        //   , 'sender': this.username, 'content': this.newMessage
-        // })
+        destination: '/app/messages', body:
+          JSON.stringify({
+            'channel': this.channel,
+            'sender': this.username,
+            'content': this.newMessage
+          })
       });
       this.newMessage = '';
       this.scrollToBottom();
