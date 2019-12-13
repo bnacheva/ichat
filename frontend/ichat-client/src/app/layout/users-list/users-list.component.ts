@@ -33,14 +33,7 @@ export class UsersListComponent implements OnInit {
     constructor(private userService: UserService, private stompService: RxStompService,
         private channelService: ChannelService, private snackBar: MatSnackBar,
         private messageService: MessageService) {
-        this.stompService.connectionState$.subscribe((state) => {
-            // state is an Enum (Integer), RxStompState[state] is the corresponding string
-            console.log(RxStompState[state]);
-        });
-
-        this.stompService.connected$.subscribe(() => {
-            console.log('I will be called for each time connection is established.');
-        });
+        this.stompService.activate();
     }
 
     ngOnInit() {
@@ -97,12 +90,8 @@ export class UsersListComponent implements OnInit {
 
     initUserEvents() {
         // this.stompService.activate();
-
-        console.log('is broker active: ')
-        console.log(this.stompService.active);
         this.stompService.watch('/channel/login').subscribe(res => {
             const data: User = JSON.parse(res.body);
-            console.log('inside initUserEvents, channel login, user: ' + data);
             if (data.username !== this.username) {
                 this.newConnectedUsers.push(data.username);
                 setTimeout((
@@ -118,7 +107,6 @@ export class UsersListComponent implements OnInit {
 
         this.stompService.watch('/channel/logout').subscribe(res => {
             const data: User = JSON.parse(res.body);
-            console.log('inside initUserEvents, channel logout, user: ' + data);
             this.users = this.users.filter(item => item.username !== data.username);
             this.users.push(data);
             const channelId = ChannelService.createChannel(this.username, data.username);
@@ -144,7 +132,6 @@ export class UsersListComponent implements OnInit {
         const channelId = ChannelService.createChannel(this.username, otherUser.username);
         this.stompService.watch(`/channel/chat/${channelId}`).subscribe(res => {
             const data: Message = JSON.parse(res.body);
-            console.log('users-list this.stompService.watch(`/channel/chat/${channelId}`).subscribe.. result: ' + data);
             this.messageService.pushMessage(data);
 
             if (data.channel !== this.channel) {

@@ -23,7 +23,6 @@ export class MessagesComponent implements OnInit {
     private channelService: ChannelService) { }
 
   ngOnInit() {
-    console.log('MESSAGES COMPONENT')
     this.channelService.getChannel().subscribe(channel => {
       this.channel = channel;
       this.filterMessages();
@@ -36,9 +35,6 @@ export class MessagesComponent implements OnInit {
 
   sendMessage() {
     if (this.newMessage) {
-      console.log('newMessage: ' + this.newMessage);
-      console.log('channel: ' + this.channel);
-      console.log('sender: ' + this.username);
       this.stompService.publish({
         destination: '/app/messages', body:
           JSON.stringify({

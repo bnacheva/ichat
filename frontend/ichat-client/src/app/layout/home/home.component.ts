@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit {
         } else {
             this.userService.login({ 'id': null, 'username': this.username });
         }
-        console.log('LOGIN COMPONENT')
     }
 
     @HostListener('window:unload', ['$event'])
