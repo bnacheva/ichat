@@ -3,7 +3,7 @@ import { settings } from './shared/util/settings';
 
 export const myRxStompConfig: InjectableRxStompConfig = {
 
-    brokerURL: `${settings.baseUrl}/ichat`,
+    brokerURL: `ws://localhost:8080/ichat`,
 
     connectHeaders: {
         login: 'guest',
