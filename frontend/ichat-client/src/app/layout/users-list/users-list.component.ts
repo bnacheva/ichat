@@ -32,9 +32,7 @@ export class UsersListComponent implements OnInit {
 
     constructor(private userService: UserService, private stompService: RxStompService,
         private channelService: ChannelService, private snackBar: MatSnackBar,
-        private messageService: MessageService) {
-        this.stompService.activate();
-    }
+        private messageService: MessageService) { }
 
     ngOnInit() {
         this.userService.findUsers().subscribe(
@@ -89,7 +87,6 @@ export class UsersListComponent implements OnInit {
     }
 
     initUserEvents() {
-        // this.stompService.activate();
         this.stompService.watch('/channel/login').subscribe(res => {
             const data: User = JSON.parse(res.body);
             if (data.username !== this.username) {
