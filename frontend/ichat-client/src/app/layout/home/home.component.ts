@@ -16,10 +16,6 @@ export class HomeComponent implements OnInit {
 
     constructor(private router: Router, private userService: UserService
         , private stompService: RxStompService, private authService: AuthService) {
-        // stompService.configure({
-        //     host: settings.baseUrl + '/ichat',
-        //     queue: { 'init': false }
-        // });
     }
 
     ngOnInit() {
@@ -29,6 +25,7 @@ export class HomeComponent implements OnInit {
         } else {
             this.userService.login({ 'id': null, 'username': this.username });
         }
+        console.log('LOGIN COMPONENT')
     }
 
     @HostListener('window:unload', ['$event'])

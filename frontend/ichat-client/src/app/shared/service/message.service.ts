@@ -17,11 +17,6 @@ export class MessageService {
         this.msgs.next(this.messages);
     }
 
-    //    pushMessages(messages: Array<any>) {
-    //        this.messages.push(message);
-    //        this.msgs.next(this.messages);
-    //    }
-
     filterMessages(channel: string): Array<Message> {
         return this.messages.filter(message => channel === message.channel)
             .sort((m1, m2) => {
@@ -44,9 +39,4 @@ export class MessageService {
         return this.msgs.asObservable();
     }
 
-    //    initMessages(channel: string): any {
-    //        return this.http.get(settings.baseUrl + '/messages/' + channel).subscribe(res => {
-    //            this.pushMessages(res.data);
-    //        });
-    //    }
 }

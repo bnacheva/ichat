@@ -6,6 +6,7 @@ import { ChannelService } from '../../shared/service/channel.service';
 import { Message } from '../../shared/model/message';
 import { MatSnackBar } from '@angular/material';
 import { MessageService } from '../../shared/service/message.service';
+import { RxStompState } from '@stomp/rx-stomp';
 
 @Component({
     selector: 'wt-userlist',
@@ -27,10 +28,20 @@ export class UsersListComponent implements OnInit {
     newConnectedUsers: Array<string> = [];
     channel: string;
     receiver: string;
+    topicSubscription;
 
     constructor(private userService: UserService, private stompService: RxStompService,
         private channelService: ChannelService, private snackBar: MatSnackBar,
-        private messageService: MessageService) { }
+        private messageService: MessageService) {
+        this.stompService.connectionState$.subscribe((state) => {
+            // state is an Enum (Integer), RxStompState[state] is the corresponding string
+            console.log(RxStompState[state]);
+        });
+
+        this.stompService.connected$.subscribe(() => {
+            console.log('I will be called for each time connection is established.');
+        });
+    }
 
     ngOnInit() {
         this.userService.findUsers().subscribe(
@@ -85,10 +96,10 @@ export class UsersListComponent implements OnInit {
     }
 
     initUserEvents() {
-        this.stompService.activate();
-        // .then(
-        //     () => {
-        //         this.stompService.done('init');
+        // this.stompService.activate();
+
+        console.log('is broker active: ')
+        console.log(this.stompService.active);
         this.stompService.watch('/channel/login').subscribe(res => {
             const data: User = JSON.parse(res.body);
             console.log('inside initUserEvents, channel login, user: ' + data);
@@ -118,7 +129,6 @@ export class UsersListComponent implements OnInit {
         });
 
         this.subscribeToOtherUsers(this.users, this.username);
-        // });
     }
 
     removeNewUserBackground(username) {
