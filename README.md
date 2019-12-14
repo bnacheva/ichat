@@ -1,5 +1,5 @@
 # ichat
-A real-time chat application with Spring Boot and Angular
+	A real-time chat application with Spring Boot and Angular
 
 ## Prerequisites
 	- Java 8
@@ -8,7 +8,7 @@ A real-time chat application with Spring Boot and Angular
 	- Angular CLI
 	
 ## Functional summary
-	- The backend part is a Spring boot application which exposes Rest API for login / logout feature. It does not use Spring security for authentication. 
+	- The backend part is a Spring Boot application which exposes Rest API for login / logout feature. It does not use Spring security for authentication. 
 	The login feature is only registering the user in the database (In memory database). 
 	The backend enables STOMP messaging over Websocket to allow two-way communication between the backend and frontend.
 
