@@ -23,7 +23,7 @@
     "@angular/router": "~8.0.1",
     "@stomp/ng2-stompjs": "^7.2.0",
     "angularx-social-login": "^2.2.1",
-    "browserslist": "^4.8.2",
+    "browserslist": "^4.16.5",
     "rxjs": "~6.4.0",
     "ts-md5": "^1.2.7",
     "tslib": "^1.9.0",
